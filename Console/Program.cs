@@ -37,7 +37,6 @@
             Console.WriteLine();
             Console.ReadKey();
 
-            // TODO: Continuar daqui
             // Filtro: filtra as posições para que possamos solver apenas as que já foram solvidas por BMF
             var positionsFilteredByBMFUsingAny = positions.Where(position => positionsSolvedByBMF.Any(bmfPosition => bmfPosition.Instrument == position.Instrument)).ToList();
             
