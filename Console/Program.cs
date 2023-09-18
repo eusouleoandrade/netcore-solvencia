@@ -6,7 +6,7 @@
         {
             decimal limiteDoCliente = -5083.6M;
 
-            bool habilitaEnvioDeOrdensPorLote = true;
+            bool habilitaEnvioDeOrdensPorLote = false;
 
             int limiteMaxDePapelPorEnvio = 50;
 
@@ -39,11 +39,14 @@
 
             // TODO: Continuar daqui
             // Filtro: filtra as posições para que possamos solver apenas as que já foram solvidas por BMF
-            var positionsFilteredByBMF = positions.Where(position => positionsSolvedByBMF.Any(bmfPosition => bmfPosition.Instrument == position.Instrument)).ToList();
+            var positionsFilteredByBMFUsingAny = positions.Where(position => positionsSolvedByBMF.Any(bmfPosition => bmfPosition.Instrument == position.Instrument)).ToList();
+            
+            // Usando o filtro com Contains
+            // var positionsFilteredByBMFUsingContains = positions.Where(position => positionsSolvedByBMF.Select(bmfPosition => bmfPosition.Instrument).Contains(position.Instrument)).ToList();
 
             // Filtro: Obtém as posições negativas
             // Ordenação: Efetua ordenação por valor do papel
-            var negativePositions = positionsFilteredByBMF.Where(positionsFilteredByBMF => positionsFilteredByBMF.Quantity < 0).OrderByDescending(o => o.Value).ToList();
+            var negativePositions = positionsFilteredByBMFUsingAny.Where(positionsFilteredByBMF => positionsFilteredByBMF.Quantity < 0).OrderByDescending(o => o.Value).ToList();
 
             // Exibe todas as posições negativas do cliente
             Console.WriteLine("Posições negativas do cliente:");
